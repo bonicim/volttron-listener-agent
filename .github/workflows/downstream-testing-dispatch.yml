@@ -4,13 +4,13 @@ on:
   repository_dispatch:
     types: [downstream-testing]
 
-env:
-      REPO: volttron-core
-      OWNER: VOLTTRON
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    env:
+      REPO: volttron-core
+      OWNER: bonicim
 
     steps:
       - name: Show all environment variables
@@ -28,6 +28,6 @@ jobs:
       - name: get list of artifacts from upstream repo
         run: |
           curl -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/VOLTTRON/volttron-core/actions/artifacts
+          'https://api.github.com/repos/${{ env.OWNER }}/volttron-core/actions/artifacts'
 
       # TODO: once we can get wheel from artifacts, run tests using the wheel
